@@ -1,0 +1,47 @@
+Q]
+
+In the Binary Search algorithm, it is suggested to calculate the mid as
+beg + (end - beg) / 2 instead of (beg + end) / 2. Why is it so?
+
+Ans:-
+
+There's no guarantee that 'beg+end' is representable; but in the first case the intermediate values, as well as the expected result, are no larger than end, so there is no danger of overflow.
+
+The first form can also be used for affine types like pointers and other random-access iterators, which can be subtracted to give a distance, but not added together.
+
+The very first way of finding middle index is
+
+mid = (start + end)/2
+But there is problem with this approach, what if value of start or end or both is INT_MAX, it will cause integer overflow.
+
+The better way of calculating mid index is :
+
+mid = start + (end - start)/2
+Let’s try these both methods in C program :
+
+// program for calculating mid of array 
+#include <stdio.h> 
+#include <limits.h> 
+int main() 
+{ 
+    int start = INT_MAX, end = INT_MAX; 
+    printf("start = %dn", start); 
+    printf("end = %dn", end); 
+  
+    // method 1 
+    int mid1 = (start + end) / 2; 
+    printf("mid using (start + end)/2 = %dn", mid1); 
+  
+    // method 2 
+    int mid2 = start + (end - start) / 2; 
+    printf("mid using start + (end - start)/2 = %dn", mid2); 
+    return 0; 
+} 
+
+Output:
+
+
+start = 2147483647
+end = 2147483647
+mid using (start + end)/2 = -1
+mid using start + (end - start)/2 = 2147483647
